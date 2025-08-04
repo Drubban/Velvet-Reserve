@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +88,20 @@ Route::post('/reset-password', [ResetPasswordController::class, 'store'])
 Route::get('/laravel-examples/user-profile', [ProfileController::class, 'index'])->name('users.profile')->middleware('auth');
 Route::put('/laravel-examples/user-profile/update', [ProfileController::class, 'update'])->name('users.update')->middleware('auth');
 Route::get('/laravel-examples/users-management', [UserController::class, 'index'])->name('users-management')->middleware('auth');
+
+
+// Reservaciones
+Route::prefix('reservaciones')->name('reservaciones.')->group(function () {
+    Route::get('/', [ReservationController::class, 'index'])->name('index');
+    Route::get('/create', [ReservationController::class, 'create'])->name('create');   // <-- aquí
+    Route::post('/', [ReservationController::class, 'store'])->name('store');
+    Route::get('/{id}', [ReservationController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [ReservationController::class, 'update'])->name('update');
+});
+
+// Clientes
+use App\Http\Controllers\ClienteController;
+
+Route::resource('clientes', ClienteController::class);
+
