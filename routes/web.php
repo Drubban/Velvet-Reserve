@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\TipoReservacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,4 +88,4 @@ Route::get('/laravel-examples/user-profile', [ProfileController::class, 'index']
 Route::put('/laravel-examples/user-profile/update', [ProfileController::class, 'update'])->name('users.update')->middleware('auth');
 Route::get('/laravel-examples/users-management', [UserController::class, 'index'])->name('users-management')->middleware('auth');
 
-Route::resource('tipo_reservacion', TipoReservacionController::class);
+
