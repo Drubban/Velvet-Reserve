@@ -7,7 +7,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SucursalController;  // <--- Importa el controlador
+use App\Http\Controllers\TipoReservacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,5 +92,44 @@ Route::get('/laravel-examples/user-profile', [ProfileController::class, 'index']
 Route::put('/laravel-examples/user-profile/update', [ProfileController::class, 'update'])->name('users.update')->middleware('auth');
 Route::get('/laravel-examples/users-management', [UserController::class, 'index'])->name('users-management')->middleware('auth');
 
-// Rutas para CRUD completo de Sucursal:
+// Reservaciones
+Route::prefix('reservaciones')->name('reservaciones.')->group(function () {
+    Route::get('/', [ReservationController::class, 'index'])->name('index');
+    Route::get('/create', [ReservationController::class, 'create'])->name('create');   // <-- aquí
+    Route::post('/', [ReservationController::class, 'store'])->name('store');
+    Route::get('/{id}', [ReservationController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [ReservationController::class, 'update'])->name('update');
+});
+
+Route::prefix('clientes')->name('clientes.')->group(function () {
+    Route::get('/', [ClienteController::class, 'index'])->name('index');
+    Route::get('/{id}', [ClienteController::class, 'show'])->name('show');
+});
+
+Route::prefix('sucursales')->name('sucursales.')->group(function () {
+    Route::get('/', [SucursalController::class, 'index'])->name('index');
+    Route::get('/create', [SucursalController::class, 'create'])->name('create');
+    Route::post('/', [SucursalController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [SucursalController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SucursalController::class, 'update'])->name('update');
+});
+
+Route::prefix('salones')->name('salones.')->group(function () {
+    Route::get('/', [SalonController::class, 'index'])->name('index');
+    Route::get('/create', [SalonController::class, 'create'])->name('create');
+    Route::post('/', [SalonController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [SalonController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SalonController::class, 'update'])->name('update');
+});
+
+Route::prefix('tipos-reservacion')->name('tipos-reservacion.')->group(function () {
+    Route::get('/', [TipoReservacionController::class, 'index'])->name('index');
+    Route::get('/create', [TipoReservacionController::class, 'create'])->name('create');
+    Route::post('/', [TipoReservacionController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [TipoReservacionController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [TipoReservacionController::class, 'update'])->name('update');
+});
+
+
 Route::resource('sucursal', SucursalController::class)->middleware('auth');
